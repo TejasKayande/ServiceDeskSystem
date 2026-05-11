@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import PrivateRoute from './components/PrivateRoute'
 import MainLayout from './components/MainLayout'
+import { ProjectsProvider } from './context/ProjectsContext'
 import Dashboard from './pages/Dashboard'
 import Issues from './pages/Issues'
 import IssuesRedirect from './pages/IssuesRedirect'
@@ -19,7 +20,13 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route element={<PrivateRoute />}>
-        <Route element={<MainLayout />}>
+        <Route
+          element={
+            <ProjectsProvider>
+              <MainLayout />
+            </ProjectsProvider>
+          }
+        >
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="projects" element={<Projects />} />
